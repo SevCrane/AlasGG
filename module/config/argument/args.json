@@ -7500,6 +7500,10 @@
       "EnhanceIndex": {
         "type": "input",
         "value": 1
+      },
+      "MaxFeedLevel": {
+        "type": "input",
+        "value": 5
       }
     },
     "Storage": {
