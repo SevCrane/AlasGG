@@ -226,6 +226,9 @@ Reward:
     Reward:
       - Scheduler
       - Reward
+    Awaken:
+      - Scheduler
+      - Awaken
 
 # ==================== DailyMission ====================
 

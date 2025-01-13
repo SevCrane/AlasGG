@@ -118,7 +118,6 @@
           "aScreenCap_nc",
           "DroidCast",
           "DroidCast_raw",
-          "scrcpy",
           "nemu_ipc",
           "ldopengl"
         ]
@@ -1733,12 +1732,12 @@
         ],
         "display": "hide",
         "option_bold": [
-          "event_20231221_cn",
-          "event_20241219_cn"
+          "event_20221222_cn",
+          "event_20231221_cn"
         ],
-        "cn": "event_20241219_cn",
-        "en": "event_20241219_cn",
-        "jp": "event_20241219_cn",
+        "cn": "event_20221222_cn",
+        "en": "event_20221222_cn",
+        "jp": "event_20221222_cn",
         "tw": "event_20231221_cn"
       },
       "Mode": {
@@ -2075,12 +2074,12 @@
           "event_20241219_cn"
         ],
         "option_bold": [
-          "event_20231221_cn",
-          "event_20241219_cn"
+          "event_20221222_cn",
+          "event_20231221_cn"
         ],
-        "cn": "event_20241219_cn",
-        "en": "event_20241219_cn",
-        "jp": "event_20241219_cn",
+        "cn": "event_20221222_cn",
+        "en": "event_20221222_cn",
+        "jp": "event_20221222_cn",
         "tw": "event_20231221_cn"
       },
       "Mode": {
@@ -2532,12 +2531,12 @@
           "event_20241219_cn"
         ],
         "option_bold": [
-          "event_20231221_cn",
-          "event_20241219_cn"
+          "event_20221222_cn",
+          "event_20231221_cn"
         ],
-        "cn": "event_20241219_cn",
-        "en": "event_20241219_cn",
-        "jp": "event_20241219_cn",
+        "cn": "event_20221222_cn",
+        "en": "event_20221222_cn",
+        "jp": "event_20221222_cn",
         "tw": "event_20231221_cn"
       },
       "Mode": {
@@ -3391,12 +3390,13 @@
           "raid_20240328"
         ],
         "option_bold": [
+          "raid_20240130",
           "raid_20240328"
         ],
         "cn": "raid_20240328",
         "en": "raid_20240328",
         "jp": "raid_20240328",
-        "tw": "raid_20240328"
+        "tw": "raid_20240130"
       },
       "Mode": {
         "type": "select",
@@ -4399,12 +4399,12 @@
           "event_20241219_cn"
         ],
         "option_bold": [
-          "event_20231221_cn",
-          "event_20241219_cn"
+          "event_20221222_cn",
+          "event_20231221_cn"
         ],
-        "cn": "event_20241219_cn",
-        "en": "event_20241219_cn",
-        "jp": "event_20241219_cn",
+        "cn": "event_20221222_cn",
+        "en": "event_20221222_cn",
+        "jp": "event_20221222_cn",
         "tw": "event_20231221_cn"
       },
       "Mode": {
@@ -4873,12 +4873,12 @@
           "event_20241219_cn"
         ],
         "option_bold": [
-          "event_20231221_cn",
-          "event_20241219_cn"
+          "event_20221222_cn",
+          "event_20231221_cn"
         ],
-        "cn": "event_20241219_cn",
-        "en": "event_20241219_cn",
-        "jp": "event_20241219_cn",
+        "cn": "event_20221222_cn",
+        "en": "event_20221222_cn",
+        "jp": "event_20221222_cn",
         "tw": "event_20231221_cn"
       },
       "Mode": {
@@ -5347,12 +5347,12 @@
           "event_20241219_cn"
         ],
         "option_bold": [
-          "event_20231221_cn",
-          "event_20241219_cn"
+          "event_20221222_cn",
+          "event_20231221_cn"
         ],
-        "cn": "event_20241219_cn",
-        "en": "event_20241219_cn",
-        "jp": "event_20241219_cn",
+        "cn": "event_20221222_cn",
+        "en": "event_20221222_cn",
+        "jp": "event_20221222_cn",
         "tw": "event_20231221_cn"
       },
       "Mode": {
@@ -5821,12 +5821,12 @@
           "event_20241219_cn"
         ],
         "option_bold": [
-          "event_20231221_cn",
-          "event_20241219_cn"
+          "event_20221222_cn",
+          "event_20231221_cn"
         ],
-        "cn": "event_20241219_cn",
-        "en": "event_20241219_cn",
-        "jp": "event_20241219_cn",
+        "cn": "event_20221222_cn",
+        "en": "event_20221222_cn",
+        "jp": "event_20221222_cn",
         "tw": "event_20231221_cn"
       },
       "Mode": {
@@ -6285,12 +6285,12 @@
           "event_20241219_cn"
         ],
         "option_bold": [
-          "event_20231221_cn",
-          "event_20241219_cn"
+          "event_20221222_cn",
+          "event_20231221_cn"
         ],
-        "cn": "event_20241219_cn",
-        "en": "event_20241219_cn",
-        "jp": "event_20241219_cn",
+        "cn": "event_20221222_cn",
+        "en": "event_20221222_cn",
+        "jp": "event_20221222_cn",
         "tw": "event_20231221_cn"
       },
       "Mode": {
@@ -6693,12 +6693,13 @@
           "raid_20240328"
         ],
         "option_bold": [
+          "raid_20240130",
           "raid_20240328"
         ],
         "cn": "raid_20240328",
         "en": "raid_20240328",
         "jp": "raid_20240328",
-        "tw": "raid_20240328"
+        "tw": "raid_20240130"
       },
       "Mode": {
         "type": "select",
@@ -7685,6 +7686,61 @@
       "CollectWeeklyMission": {
         "type": "checkbox",
         "value": true
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  },
+  "Awaken": {
+    "Scheduler": {
+      "Enable": {
+        "type": "checkbox",
+        "value": false,
+        "option": [
+          true,
+          false
+        ]
+      },
+      "NextRun": {
+        "type": "datetime",
+        "value": "2020-01-01 00:00:00",
+        "validate": "datetime"
+      },
+      "Command": {
+        "type": "input",
+        "value": "Awaken",
+        "display": "hide"
+      },
+      "SuccessInterval": {
+        "type": "input",
+        "value": 0,
+        "display": "hide"
+      },
+      "FailureInterval": {
+        "type": "input",
+        "value": 120,
+        "display": "hide"
+      },
+      "ServerUpdate": {
+        "type": "input",
+        "value": "00:00",
+        "display": "hide"
+      }
+    },
+    "Awaken": {
+      "LevelCap": {
+        "type": "select",
+        "value": "level120",
+        "option": [
+          "level120",
+          "level125"
+        ]
       }
     },
     "Storage": {

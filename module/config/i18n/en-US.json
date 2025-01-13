@@ -150,6 +150,10 @@
       "name": "Reward",
       "help": ""
     },
+    "Awaken": {
+      "name": "Awaken",
+      "help": ""
+    },
     "Daily": {
       "name": "Daily",
       "help": ""
@@ -280,7 +284,7 @@
     },
     "NextRun": {
       "name": "Next Run",
-      "help": "Updated automatically after completing the task to set next scheduled run, typically not manually modified\nHowever you can force immediate scheduling if you clear this text field"
+      "help": "Updated automatically after completing the task to set next scheduled run, typically not manually modified\nHowever you can force immediate scheduling if text field cleared"
     },
     "Command": {
       "name": "Command",
@@ -415,7 +419,6 @@
       "aScreenCap_nc": "aScreenCap_nc",
       "DroidCast": "DroidCast",
       "DroidCast_raw": "DroidCast_raw",
-      "scrcpy": "scrcpy",
       "nemu_ipc": "nemu_ipc",
       "ldopengl": "ldopengl"
     },
@@ -721,7 +724,7 @@
       "event_20220818_cn": "Operation Convergence",
       "event_20220915_cn": "Violet Tempest Blooming Lycoris Rerun",
       "event_20221124_cn": "The Alchemist and the Archipelago of Secrets",
-      "event_20221222_cn": "Parallel Superimposition",
+      "event_20221222_cn": "Parallel Superimposition Rerun",
       "event_20230223_cn": "Revelations of Dust",
       "event_20230525_cn": "Confluence of Nothingness",
       "event_20230803_cn": "Anthem of Remembrance",
@@ -1608,6 +1611,18 @@
     "CollectWeeklyMission": {
       "name": "Collect Weekly Mission Rewards",
       "help": ""
+    }
+  },
+  "Awaken": {
+    "_info": {
+      "name": "Cognitive Awakening Settings",
+      "help": "Awaken all ships in dock til cognitive chips/arrays exhausted"
+    },
+    "LevelCap": {
+      "name": "To Level Cap",
+      "help": "",
+      "level120": "Lv.120",
+      "level125": "Lv.125"
     }
   },
   "GeneralShop": {
