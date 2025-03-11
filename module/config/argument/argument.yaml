@@ -734,6 +734,11 @@ Daemon:
 OpsiDaemon:
   RepairShip: true
   SelectEnemy: true
+EventStory:
+  SkipBattle:
+    type: checkbox
+    value: false
+    option: [ true, false ]
 Benchmark:
   DeviceType:
     value: emulator

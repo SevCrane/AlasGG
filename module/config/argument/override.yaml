@@ -441,6 +441,16 @@ OpsiHazard1Leveling:
   OpsiFleet:
     Submarine: false
 
+# ==================== Tool ====================
+
+EventStory:
+  EventStory:
+    SkipBattle:
+      type: lock
+      value: true
+      option: [ true, ]
+      option_bold: [ true, ]
+
 # ==================== GGHandler ====================
 GGHandler:
   Timeout:
