@@ -51,8 +51,6 @@ from module.config.utils import (
     filepath_config,
     read_file,
 )
-from module.config.utils import time_delta
-from module.log_res.log_res import LogRes
 from module.logger import logger
 from module.ocr.rpc import start_ocr_server_process, stop_ocr_server_process
 from module.submodule.submodule import load_config
@@ -67,7 +65,7 @@ from module.webui.process_manager import ProcessManager
 from module.webui.remote_access import RemoteAccess
 from module.webui.setting import State
 from module.webui.updater import updater
-from module.webui.utils import (
+from module.webui.utils import  (
     Icon,
     Switch,
     TaskHandler,
