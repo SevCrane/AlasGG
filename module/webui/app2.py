@@ -1,15 +1,16 @@
-import argparse
+import sys
 import json
-import queue
-import threading
 import time
+import queue
+import argparse
+import threading
+
 from datetime import datetime
 from functools import partial
 from typing import Dict, List, Optional
 
 # Import fake module before import pywebio to avoid importing unnecessary module PIL
 from module.webui.fake_pil_module import import_fake_pil_module
-
 import_fake_pil_module()
 
 from pywebio import config as webconfig
@@ -37,20 +38,24 @@ from pywebio.output import (
     use_scope,
 )
 from pywebio.pin import pin, pin_on_change
-from pywebio.session import download, go_app, info, local, register_thread, run_js, set_env
+from pywebio.session import (download, go_app, info, local, register_thread, run_js, set_env)
 
 import module.webui.lang as lang
 from module.config.config import AzurLaneConfig, Function
-from module.config.deep import deep_get, deep_iter, deep_set
 from module.config.env import IS_ON_PHONE_CLOUD
 from module.config.utils import (
     alas_instance,
     alas_template,
+    deep_get,
+    deep_iter,
+    deep_set,
     dict_to_kv,
     filepath_args,
     filepath_config,
     read_file,
 )
+from module.config.utils import time_delta
+from module.log_res.log_res import LogRes
 from module.logger import logger
 from module.ocr.rpc import start_ocr_server_process, stop_ocr_server_process
 from module.submodule.submodule import load_config
@@ -121,6 +126,7 @@ class AlasGUI(Frame):
     ALAS_MENU: Dict[str, Dict[str, List[str]]]
     ALAS_ARGS: Dict[str, Dict[str, Dict[str, Dict[str, str]]]]
     theme = "default"
+    _log = RichLog
 
     def initial(self) -> None:
         self.ALAS_MENU = read_file(filepath_args("menu", self.alas_mod))
@@ -413,6 +419,8 @@ class AlasGUI(Frame):
         )
 
         log = RichLog("log")
+        self._log = log
+        self._log.dashboard_arg_group = LogRes(self.alas_config).groups
 
         with use_scope("logs"):
             if 'Maa' in self.ALAS_ARGS:
@@ -521,6 +529,7 @@ class AlasGUI(Frame):
             config_updater: AzurLaneConfig = State.config_updater,
     ) -> None:
         try:
+            skip_time_record = False
             valid = []
             invalid = []
             config = config_updater.read_file(config_name)
@@ -1041,17 +1050,17 @@ class AlasGUI(Frame):
     def dev_utils(self) -> None:
         self.init_menu(name="Utils")
         self.set_title(t("Gui.MenuDevelop.Utils"))
-        put_button(label="Raise exception", onclick=raise_exception)
+        put_button(label=t("Gui.MenuDevelop.RaiseException"), onclick=raise_exception)
 
         def _force_restart():
             if State.restart_event is not None:
-                toast("Alas will restart in 3 seconds", duration=0, color="error")
+                toast(t("Gui.Toast.AlasRestart"), duration=0, color="error")
                 clearup()
                 State.restart_event.set()
             else:
-                toast("Reload not enabled", color="error")
+                toast(t("Gui.Toast.ReloadEnabled"), color="error")
 
-        put_button(label="Force restart", onclick=_force_restart)
+        put_button(label=t("Gui.MenuDevelop.ForceRestart"), onclick=_force_restart)
 
     @use_scope("content", clear=True)
     def dev_remote(self) -> None:
@@ -1594,9 +1603,6 @@ def app():
     logger.attr("Password", True if key else False)
     logger.attr("CDN", cdn)
     logger.attr("IS_ON_PHONE_CLOUD", IS_ON_PHONE_CLOUD)
-
-    from deploy.atomic import atomic_failure_cleanup
-    atomic_failure_cleanup('./config')
 
     def index():
         if key is not None and not login(key):
