@@ -65,7 +65,7 @@ from module.webui.process_manager import ProcessManager
 from module.webui.remote_access import RemoteAccess
 from module.webui.setting import State
 from module.webui.updater import updater
-from module.webui.utils import  (
+from module.webui.utils import (
     Icon,
     Switch,
     TaskHandler,
@@ -121,7 +121,6 @@ class AlasGUI(Frame):
     ALAS_MENU: Dict[str, Dict[str, List[str]]]
     ALAS_ARGS: Dict[str, Dict[str, Dict[str, Dict[str, str]]]]
     theme = "default"
-    _log = RichLog
 
     def initial(self) -> None:
         self.ALAS_MENU = read_file(filepath_args("menu", self.alas_mod))
@@ -414,43 +413,22 @@ class AlasGUI(Frame):
         )
 
         log = RichLog("log")
-        self._log = log
-        self._log.dashboard_arg_group = LogRes(self.alas_config).groups
 
         with use_scope("logs"):
-            if 'Maa' in self.ALAS_ARGS:
-                put_scope(
-                    "log-bar",
-                    [
-                        put_text(t("Gui.Overview.Log")).style(
-                            "font-size: 1.25rem; margin: auto .5rem auto;"
-                        ),
-                        put_scope(
-                            "log-bar-btns",
-                            [
-                                put_scope("log_scroll_btn"),
-                            ],
-                        ),
-                    ],
-                ),
-            else:
-                put_scope(
-                    "log-bar",
-                    [
-                        put_text(t("Gui.Overview.Log")).style(
-                            "font-size: 1.25rem; margin: auto .5rem auto;"
-                        ),
-                        put_scope(
-                            "log-bar-btns",
-                            [
-                                put_scope("log_scroll_btn"),
-                                put_scope("dashboard_btn"),
-                            ],
-                        ),
-                        put_html('<hr class="hr-group">'),
-                        put_scope("dashboard"),
-                    ],
-                ),
+            put_scope(
+                "log-bar",
+                [
+                    put_text(t("Gui.Overview.Log")).style(
+                        "font-size: 1.25rem; margin: auto .5rem auto;"
+                    ),
+                    put_scope(
+                        "log-bar-btns",
+                        [
+                            put_scope("log_scroll_btn"),
+                        ],
+                    ),
+                ],
+            )
             put_scope("log", [put_html("")])
 
         log.console.width = log.get_width()
@@ -477,11 +455,7 @@ class AlasGUI(Frame):
         )
         self.task_handler.add(switch_scheduler.g(), 1, True)
         self.task_handler.add(switch_log_scroll.g(), 1, True)
-        if 'Maa' not in self.ALAS_ARGS:
-            self.task_handler.add(switch_dashboard.g(), 1, True)
         self.task_handler.add(self.alas_update_overview_task, 10, True)
-        if 'Maa' not in self.ALAS_ARGS:
-            self.task_handler.add(self.alas_update_dashboard, 10, True)
         self.task_handler.add(log.put_log(self.alas), 0.25, True)
 
     def set_dashboard_display(self, b):
@@ -524,7 +498,6 @@ class AlasGUI(Frame):
             config_updater: AzurLaneConfig = State.config_updater,
     ) -> None:
         try:
-            skip_time_record = False
             valid = []
             invalid = []
             config = config_updater.read_file(config_name)
@@ -1045,17 +1018,17 @@ class AlasGUI(Frame):
     def dev_utils(self) -> None:
         self.init_menu(name="Utils")
         self.set_title(t("Gui.MenuDevelop.Utils"))
-        put_button(label=t("Gui.MenuDevelop.RaiseException"), onclick=raise_exception)
+        put_button(label="Raise exception", onclick=raise_exception)
 
         def _force_restart():
             if State.restart_event is not None:
-                toast(t("Gui.Toast.AlasRestart"), duration=0, color="error")
+                toast("Alas will restart in 3 seconds", duration=0, color="error")
                 clearup()
                 State.restart_event.set()
             else:
-                toast(t("Gui.Toast.ReloadEnabled"), color="error")
+                toast("Reload not enabled", color="error")
 
-        put_button(label=t("Gui.MenuDevelop.ForceRestart"), onclick=_force_restart)
+        put_button(label="Force restart", onclick=_force_restart)
 
     @use_scope("content", clear=True)
     def dev_remote(self) -> None:
