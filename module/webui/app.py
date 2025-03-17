@@ -414,7 +414,6 @@ class AlasGUI(Frame):
         )
 
         log = RichLog("log")
-
         with use_scope("logs"):
             if 'Maa' in self.ALAS_ARGS:
                 put_scope(
