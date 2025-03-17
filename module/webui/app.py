@@ -465,8 +465,8 @@ class AlasGUI(Frame):
         switch_dashboard = BinarySwitchButton(
             label_on=t("Gui.Button.DashboardON"),
             label_off=t("Gui.Button.DashboardOFF"),
-            onclick_on=lambda b: self.set_dashboard_display(False),
-            onclick_off=lambda b: self.set_dashboard_display(True),
+            onclick_on=lambda: self.set_dashboard_display(False),
+            onclick_off=lambda: self.set_dashboard_display(True),
             get_state=lambda: log.display_dashboard,
             color_on="off",
             color_off="on",
