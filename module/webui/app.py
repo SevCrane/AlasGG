@@ -481,7 +481,7 @@ class AlasGUI(Frame):
             self.task_handler.add(self.alas_update_dashboard, 10, True)
         self.task_handler.add(log.put_log(self.alas), 0.25, True)
 
-    def set_dashboard_display(self, b):
+    def set_dashboard_display(self, b = False):
         self._log.set_dashboard_display(b)
         self.alas_update_dashboard(True)
 
