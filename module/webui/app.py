@@ -465,8 +465,8 @@ class AlasGUI(Frame):
         switch_dashboard = BinarySwitchButton(
             label_on=t("Gui.Button.DashboardON"),
             label_off=t("Gui.Button.DashboardOFF"),
-            onclick_on=lambda: self.set_dashboard_display(False),
-            onclick_off=lambda: self.set_dashboard_display(True),
+            onclick_on=lambda b: self.set_dashboard_display(False),
+            onclick_off=lambda b: self.set_dashboard_display(True),
             get_state=lambda: log.display_dashboard,
             color_on="off",
             color_off="on",
@@ -481,8 +481,8 @@ class AlasGUI(Frame):
             self.task_handler.add(self.alas_update_dashboard, 10, True)
         self.task_handler.add(log.put_log(self.alas), 0.25, True)
 
-    def set_dashboard_display(self):
-        self._log.set_dashboard_display(True)
+    def set_dashboard_display(self, b):
+        self._log.set_dashboard_display(b)
         self.alas_update_dashboard(True)
 
     def _init_alas_config_watcher(self) -> None:
