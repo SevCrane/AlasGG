@@ -492,7 +492,10 @@ class AzurLaneAutoScript:
                     if not self.wait_until(task.next_run):
                         del_cached_property(self, 'config')
                         continue
-                    self.run('start')
+                    if task.command != 'Restart':
+                        self.config.task_call('Restart')
+                        del_cached_property(self, 'config')
+                        continue
                 elif method == 'goto_main':
                     logger.info('Goto main page during wait')
                     self.run('goto_main')
