@@ -82,6 +82,10 @@
       "name": "Raid",
       "help": ""
     },
+    "Hospital": {
+      "name": "Valley Hospital",
+      "help": ""
+    },
     "Coalition": {
       "name": "Little Academy",
       "help": ""
@@ -793,6 +797,7 @@
       "war_archives_20211229_cn": "archives Tower of Transcendence",
       "war_archives_20220210_cn": "archives Northern Overture",
       "war_archives_20220224_cn": "archives Abyssal Refrain",
+      "war_archives_20220324_cn": "archives Virtual Tower",
       "war_archives_20220414_cn": "archives Aurora Noctis"
     },
     "Mode": {
@@ -1285,6 +1290,16 @@
     "StageFilter": {
       "name": "Raid Daily Stage Filter",
       "help": "Generally does not need to be modified or re-arranged but can do so if desired\nCan save on oil consumption if less are attacked\nSupports EX difficulty if specified, submarine is force called to increase clearing rate"
+    }
+  },
+  "Hospital": {
+    "_info": {
+      "name": "Event Settings",
+      "help": ""
+    },
+    "UseRecommendFleet": {
+      "name": "Use Fleet Recommendation",
+      "help": "If turned off, you need to manually prepare fleets of all 15 stages in advance"
     }
   },
   "MaritimeEscort": {

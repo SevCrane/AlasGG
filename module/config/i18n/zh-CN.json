@@ -82,6 +82,10 @@
       "name": "共斗活动",
       "help": ""
     },
+    "Hospital": {
+      "name": "深谷来信",
+      "help": ""
+    },
     "Coalition": {
       "name": "童心学院",
       "help": ""
@@ -793,6 +797,7 @@
       "war_archives_20211229_cn": "档案 逆转彩虹之塔",
       "war_archives_20220210_cn": "档案 北境序曲",
       "war_archives_20220224_cn": "档案 深度回音",
+      "war_archives_20220324_cn": "档案 虚像构筑之塔",
       "war_archives_20220414_cn": "档案 永夜幻光"
     },
     "Mode": {
@@ -1285,6 +1290,16 @@
     "StageFilter": {
       "name": "难度过滤器",
       "help": ""
+    }
+  },
+  "Hospital": {
+    "_info": {
+      "name": "活动设置",
+      "help": ""
+    },
+    "UseRecommendFleet": {
+      "name": "使用舰队推荐",
+      "help": "如果关闭，需要事先手动为所有15个关卡配队"
     }
   },
   "MaritimeEscort": {
