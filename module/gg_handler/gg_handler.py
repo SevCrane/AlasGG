@@ -66,21 +66,20 @@ class GGHandler:
         from module.handler.login import LoginHandler
         from module.exception import GameStuckError
         _crashed = crashed
-        for _ in range(2):
+        attempt_count = 0 
+        while True:  # 使用无限循环
             try:
-                if _crashed:
-                    timeout(self.handle_u2_restart, timeout_sec=60)
                 if not timeout(LoginHandler(config=self.config, device=self.device).app_restart, timeout_sec=600):
+                    logger.info(f"Game restarted successfully after {attempt_count + 1} attempts.")
                     break
                 raise RuntimeError
-            except GameStuckError as e:
-                pass
+            except (GameStuckError) as e:
+                logger.error(f"Game restart failed on attempt {attempt_count + 1}: {e}. Retrying...")
             except Exception as e:
                 logger.exception(e)
-                if _crashed:
-                    logger.critical('Maybe your emulator died, trying to restart it')
-                    self.device.emulator_start()
-                _crashed = True
+            attempt_count += 1
+            logger.info(f"Restart attempt {attempt_count} failed. Retrying after a delay...")
+            time.sleep(5)
 
     def set(self, mode=True):
         """
