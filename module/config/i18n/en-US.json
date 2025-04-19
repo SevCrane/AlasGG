@@ -87,7 +87,7 @@
       "help": ""
     },
     "Coalition": {
-      "name": "Little Academy",
+      "name": "Frostfall",
       "help": ""
     },
     "MaritimeEscort": {
@@ -123,7 +123,7 @@
       "help": ""
     },
     "CoalitionSp": {
-      "name": "Little Academy SP",
+      "name": "Frostfall SP",
       "help": ""
     },
     "Commission": {
@@ -1320,9 +1320,10 @@
     "Mode": {
       "name": "Mode",
       "help": "SP needs to use event daily SP to run",
-      "easy": "Easy",
-      "normal": "Normal",
-      "hard": "Hard",
+      "tc1": "tc1",
+      "tc2": "tc2",
+      "tc3": "tc3",
+      "sp": "sp",
       "ex": "EX"
     },
     "Fleet": {
