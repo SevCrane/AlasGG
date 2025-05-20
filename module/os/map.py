@@ -459,6 +459,14 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
 
     def os_auto_search_daemon(self, drop=None, strategic=False, skip_first_screenshot=True):
         """
+        Args:
+            drop (DropRecord):
+            strategic (bool): True if running in strategic search
+            skip_first_screenshot:
+
+        Returns:
+            int: Number of finished battle
+
         Raises:
             CampaignEnd: If auto search ended
             RequestHumanTakeover: If there's no auto search option.
@@ -475,6 +483,7 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
         self.ash_popup_canceled = False
 
         success = True
+        finished_combat = 0
         died_timer = Timer(1.5, count=3)
         self.hp_reset()
         while 1:
@@ -523,7 +532,9 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
                 if strategic and self.config.task_switched():
                     self.interrupt_auto_search()
                 result = self.auto_search_combat(drop=drop)
-                if not result:
+                if result:
+                    finished_combat += 1
+                else:
                     self.hp_get()
                     if any(self.need_repair):
                         success = False
@@ -533,7 +544,17 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
                 # Auto search can not handle siren searching device.
                 continue
 
+        return finished_combat
+
     def interrupt_auto_search(self, skip_first_screenshot=True):
+        """
+        Raises:
+            TaskEnd: If auto search interrupted
+
+        Pages:
+            in: Any, usually to be is_combat_executing
+            out: page_main
+        """
         logger.info('Interrupting auto search')
         is_loading = False
         pause_interval = Timer(0.5, count=1)
@@ -599,12 +620,22 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
                 continue
 
     def os_auto_search_run(self, drop=None, strategic=False):
+        """
+        Args:
+            drop (DropRecord):
+            strategic (bool): True to use strategic search
+
+        Returns:
+            int: Number of finished combat
+        """
+        finished_combat = 0
         for _ in range(5):
             backup = self.config.temporary(Campaign_UseAutoSearch=True)
             try:
                 if strategic:
                     self.strategic_search_start(skip_first_screenshot=True)
-                self.os_auto_search_daemon(drop=drop, strategic=strategic)
+                combat = self.os_auto_search_daemon(drop=drop, strategic=strategic)
+                finished_combat += combat
             except CampaignEnd:
                 logger.info('OS auto search finished')
             finally:
@@ -625,6 +656,8 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
                     continue
                 else:
                     break
+
+        return finished_combat
 
     def clear_question(self, drop=None):
         """
@@ -691,6 +724,9 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
                 This option should be disabled in special tasks like OpsiObscure, OpsiAbyssal, OpsiStronghold.
             after_auto_search (bool):
                 Whether to call handle_after_auto_search() after auto search
+
+        Returns:
+            int: Number of finished combat
         """
         if rescan is None:
             rescan = self.config.OpsiGeneral_DoRandomMapEvent
@@ -699,12 +735,14 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
         self.handle_ash_beacon_attack()
 
         logger.info(f'Run auto search, question={question}, rescan={rescan}')
+        finished_combat = 0
         with self.stat.new(
                 genre=inflection.underscore(self.config.task.command),
                 method=self.config.DropRecord_OpsiRecord
         ) as drop:
             while 1:
-                self.os_auto_search_run(drop)
+                combat = self.os_auto_search_run(drop)
+                finished_combat += combat
 
                 # Record current zone, skip this if no rewards from auto search.
                 drop.add(self.device.image)
@@ -729,6 +767,8 @@ class OSMap(OSFleet, Map, GlobeCamera, StrategicSearchHandler):
 
             if drop.count == 1:
                 drop.clear()
+
+        return finished_combat
 
     _solved_map_event = set()
     _solved_fleet_mechanism = 0
