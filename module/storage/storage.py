@@ -51,21 +51,53 @@ class StorageHandler(StorageUI):
         Pages:
             in: SHOP_BUY_CONFIRM_AMOUNT
         """
-        # same code from shop clerk
+        logger.info(f'Set box amount')
 
-        OCR_SHOP_AMOUNT = Digit(BOX_AMOUNT_OCR, letter=(239, 239, 239), name='OCR_SHOP_AMOUNT')
+        # same code from shop clerk
+        ocr = Digit(BOX_AMOUNT_OCR, letter=(239, 239, 239), name='OCR_SHOP_AMOUNT')
         index_offset = (40, 50)
-        # In case either -/+ shift position, use
-        # shipyard ocr trick to accurately parse
-        self.appear(AMOUNT_MINUS, offset=index_offset)
-        self.appear(AMOUNT_PLUS, offset=index_offset)
-        area = OCR_SHOP_AMOUNT.buttons[0]
-        OCR_SHOP_AMOUNT.buttons = [(AMOUNT_MINUS.button[2] + 3, area[1], AMOUNT_PLUS.button[0] - 3, area[3])]
+
+        # wait until amount buttons appear
+        timeout = Timer(1, count=3).start()
+        for _ in self.loop():
+            # In case either -/+ shift position, use
+            # shipyard ocr trick to accurately parse
+            if self.appear(AMOUNT_MINUS, offset=index_offset) and self.appear(AMOUNT_PLUS, offset=index_offset):
+                break
+            if timeout.reached():
+                logger.warning('Wait AMOUNT_MINUS AMOUNT_PLUS timeout')
+                break
+
+        # wait until a normal number
+        current = 0
+        timeout = Timer(1, count=3).start()
+        for _ in self.loop():
+            current = ocr.ocr(self.device.image)
+            if 1 <= current <= amount + 10:
+                break
+            if timeout.reached():
+                logger.warning('Wait box amount timeout')
+                break
 
         # set amount
-        self.ui_ensure_index(amount, letter=OCR_SHOP_AMOUNT, prev_button=AMOUNT_MINUS, next_button=AMOUNT_PLUS,
-                             interval=(0.1, 0.2), skip_first_screenshot=True)
-        self.device.click(BOX_AMOUNT_CONFIRM)
+        # a ui_ensure_index
+        logger.info(f'Set box amount: {amount}')
+        skip_first = True
+        retry = Timer(1, count=2)
+        for _ in self.loop():
+            if skip_first:
+                skip_first = False
+            else:
+                current = ocr.ocr(self.device.image)
+            diff = amount - current
+            if diff == 0:
+                break
+
+            if retry.reached():
+                button = AMOUNT_PLUS if diff > 0 else AMOUNT_MINUS
+                self.device.multi_click(button, n=abs(diff), interval=(0.1, 0.2))
+                retry.reset()
+
         return True
 
     def _storage_use_one_box(self, button, amount=1):
@@ -100,7 +132,7 @@ class StorageHandler(StorageUI):
 
         for _ in self.loop():
             # End
-            if success and self._storage_in_material():
+            if success and self._storage_in_material() and not self.appear(EQUIP_CONFIRM_2, offset=(20, 20)):
                 break
 
             # use
@@ -114,18 +146,17 @@ class StorageHandler(StorageUI):
                 logger.info(f'{GET_ITEMS_1} -> {MATERIAL_ENTER}')
                 self.device.click(MATERIAL_ENTER)
                 self.interval_reset(MATERIAL_CHECK)
-                success = True
                 continue
             if self.appear(GET_ITEMS_2, offset=(5, 5), interval=5):
                 logger.info(f'{GET_ITEMS_2} -> {MATERIAL_ENTER}')
                 self.device.click(MATERIAL_ENTER)
                 self.interval_reset(MATERIAL_CHECK)
-                success = True
                 continue
             # use match_template_color on BOX_AMOUNT_CONFIRM
             # a long animation that opens a box, will be on the top of BOX_AMOUNT_CONFIRM
             if self.match_template_color(BOX_AMOUNT_CONFIRM, offset=(20, 20), interval=5):
                 self._handle_use_box_amount(amount)
+                self.device.click(BOX_AMOUNT_CONFIRM)
                 self.interval_reset(BOX_AMOUNT_CONFIRM)
                 used = amount
                 continue
@@ -136,6 +167,9 @@ class StorageHandler(StorageUI):
                 # GET_ITEMS_* don't appear that fast
                 self.interval_reset(MATERIAL_CHECK)
                 self.interval_clear([GET_ITEMS_1, GET_ITEMS_2])
+                # EQUIP_CONFIRM_2 -> GET_ITEMS -> _storage_in_material
+                # mark EQUIP_CONFIRM_2 as the last
+                success = True
                 continue
 
             # Storage full
@@ -216,9 +250,11 @@ class StorageHandler(StorageUI):
             else:
                 MATERIAL_SCROLL.set_top(main=self)
 
-            while amount > used:
+            while 1:
                 logger.hr('Use boxes in page')
-                used += self._storage_use_box_in_page(rarity=rarity, amount=amount - used)
+                used += self._storage_use_box_in_page(rarity=rarity, amount=max(amount - used, 0))
+                if used >= amount:
+                    break
                 if MATERIAL_SCROLL.at_bottom(main=self):
                     logger.info('Scroll bar reached end, stop')
                     break
@@ -362,7 +398,7 @@ class StorageHandler(StorageUI):
         self.equipment_filter_set()
         return disassembled
 
-    def storage_disassemble_equipment(self, rarity=1, amount=40):
+    def storage_disassemble_equipment(self, rarity=1, amount=15):
         """
         Disassemble target amount of equipment.
         If not having enough equipment, use boxes then disassemble.
@@ -392,14 +428,29 @@ class StorageHandler(StorageUI):
                 break
 
             self._storage_enter_material()
-            boxes = self._storage_use_box_execute(rarity=rarity, amount=amount - disassembled)
-            if boxes <= 0:
-                logger.warning('No more boxes to use, disassemble equipment end')
+            try:
+                boxes = self._storage_use_box_execute(rarity=rarity, amount=amount - disassembled)
+                if boxes <= 0:
+                    logger.warning('No more boxes to use, disassemble equipment end')
+                    self.storage_has_boxes = False
+                    break
+                # since 2025.05.20, equipments in boxes get disassembled automatically
+                disassembled += boxes
+                # use bos success, check total again
+                continue
+            except StorageFull:
+                pass
+            # handle storage full
+            self._storage_enter_disassemble()
+            equip = self._storage_disassemble_equipment_execute(rarity=rarity, amount=amount)
+            disassembled += equip
+            if equip <= 0:
+                logger.warning('StorageFull but unable to disassemble, '
+                               'probably because storage is full of rare equipments or above, '
+                               'disassemble equipment end')
+                logger.warning('Please manually disassemble some equipments to free up storage')
                 self.storage_has_boxes = False
                 break
-
-            # since 2025.05.20, equipments in boxes get disassembled automatically
-            disassembled += boxes
 
         return disassembled
 
