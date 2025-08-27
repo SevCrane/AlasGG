@@ -1,4 +1,5 @@
 from module.base.timer import Timer
+from module.campaign.campaign_status import OCR_COIN
 from module.combat.assets import GET_SHIP
 from module.exception import ScriptError
 from module.gacha.assets import *
@@ -18,7 +19,8 @@ OCR_BUILD_SUBMIT_COUNT = Digit(BUILD_SUBMIT_COUNT, letter=(255, 247, 247), thres
 OCR_BUILD_SUBMIT_WW_COUNT = Digit(BUILD_SUBMIT_WW_COUNT, letter=(255, 247, 247), threshold=64)
 
 
-class RewardGacha(GachaUI, GeneralShop, Retirement):
+class RewardGacha(GachaUI, Retirement):
+    build_coin_count = 0
     build_cube_count = 0
     build_ticket_count = 0
 
@@ -115,7 +117,7 @@ class RewardGacha(GachaUI, GeneralShop, Retirement):
                 break
 
             # Insufficient resources, reduce by 1 and re-calculate
-            if gold_total > self._currency or cube_total > self.build_cube_count:
+            if gold_total > self.build_coin_count or cube_total > self.build_cube_count:
                 target_count -= 1
                 continue
 
@@ -123,7 +125,7 @@ class RewardGacha(GachaUI, GeneralShop, Retirement):
 
         # Modify resources, return current 'target_count'
         logger.info(f'Able to submit up to {target_count} build orders')
-        self._currency -= gold_total
+        self.build_coin_count -= gold_total
         self.build_cube_count -= cube_total
         LogRes(self.config).Cube = self.build_cube_count
         self.config.update()
@@ -216,7 +218,7 @@ class RewardGacha(GachaUI, GeneralShop, Retirement):
                 break
             else:
                 queue_clean = False
-            
+
             if self.appear_then_click(BUILD_FINISH_ORDERS, interval=3):
                 confirm_timer.reset()
                 continue
@@ -302,6 +304,10 @@ class RewardGacha(GachaUI, GeneralShop, Retirement):
         # main Build page
         self.gacha_flush_queue()
 
+        # OCR Gold and Cubes
+        self.shop_currency()
+        self.build_cube_count = OCR_BUILD_CUBE_COUNT.ocr(self.device.image)
+
         # Transition to appropriate target construction pool
         # Returns appropriate costs for gacha as well
         actual_pool = self.gacha_goto_pool(self.config.Gacha_Pool)
@@ -325,9 +331,6 @@ class RewardGacha(GachaUI, GeneralShop, Retirement):
             buy[0] = self.build_ticket_count
             # Calculate rolls allowed based on configurations and resources
             buy[1] = self.gacha_calculate(self.config.Gacha_Amount-self.build_ticket_count, gold_cost, cube_cost)
-        else:
-            LogRes(self.config).Cube = self.build_cube_count
-            self.config.update()
 
         # Submit 'buy_count' and execute if capable
         # Cannot use handle_popup_confirm, this window
