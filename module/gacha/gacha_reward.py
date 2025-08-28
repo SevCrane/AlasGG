@@ -8,8 +8,6 @@ from module.handler.assets import POPUP_CONFIRM, STORY_SKIP
 from module.logger import logger
 from module.ocr.ocr import Digit
 from module.retire.retirement import Retirement
-from module.shop.shop_general import GeneralShop
-from module.log_res.log_res import LogRes
 
 RECORD_GACHA_OPTION = ('RewardRecord', 'gacha')
 RECORD_GACHA_SINCE = (0,)
@@ -127,8 +125,6 @@ class RewardGacha(GachaUI, Retirement):
         logger.info(f'Able to submit up to {target_count} build orders')
         self.build_coin_count -= gold_total
         self.build_cube_count -= cube_total
-        LogRes(self.config).Cube = self.build_cube_count
-        self.config.update()
         return target_count
 
     def gacha_goto_pool(self, target_pool):
@@ -293,11 +289,6 @@ class RewardGacha(GachaUI, Retirement):
         # Go to Gacha
         self.ui_goto_gacha()
 
-        # OCR Gold and Cubes
-        self.device.screenshot()
-        self.shop_currency()
-        self.build_cube_count = OCR_BUILD_CUBE_COUNT.ocr(self.device.image)
-
         # Flush queue of any pre-existing
         # builds to ensure starting fresh
         # Upon exit, expected to be in
@@ -305,7 +296,7 @@ class RewardGacha(GachaUI, Retirement):
         self.gacha_flush_queue()
 
         # OCR Gold and Cubes
-        self.shop_currency()
+        self.build_coin_count = OCR_COIN.ocr(self.device.image)
         self.build_cube_count = OCR_BUILD_CUBE_COUNT.ocr(self.device.image)
 
         # Transition to appropriate target construction pool
@@ -330,7 +321,7 @@ class RewardGacha(GachaUI, Retirement):
         if self.config.Gacha_Amount > self.build_ticket_count:
             buy[0] = self.build_ticket_count
             # Calculate rolls allowed based on configurations and resources
-            buy[1] = self.gacha_calculate(self.config.Gacha_Amount-self.build_ticket_count, gold_cost, cube_cost)
+            buy[1] = self.gacha_calculate(self.config.Gacha_Amount - self.build_ticket_count, gold_cost, cube_cost)
 
         # Submit 'buy_count' and execute if capable
         # Cannot use handle_popup_confirm, this window
