@@ -93,7 +93,7 @@ class MeritShop_250814(MeritShop):
             template_area=(25, 20, 82, 72),
             amount_area=(42, 50, 65, 65),
             cost_area=(-12, 115, 60, 155),
-            price_area=(14, 121, 85, 150),
+            price_area=(18, 121, 85, 150),
         )
         shop_merit_items.load_template_folder(self.shop_template_folder)
         shop_merit_items.load_cost_template_folder('./assets/shop/cost')
