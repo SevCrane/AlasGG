@@ -745,10 +745,3 @@ To add a new event, add a new row in here, and run `python -m module.config.conf
 | 20250912   | event 20250912 cn        | A Dance for Amahara Above                    | 起舞于天原之上             | A Dance for Amahara Above                          | アマハラに舞い奉れ                   | -                          |
 <<<<<<< HEAD
 | 20250919   | event 20250912 cn        | A Dance for Amahara Above                    | -                          | -                                                  | -                                    | 起舞於天原之上             |
-=======
-=======
-=======
->>>>>>> dev
->>>>>>> f6c8d91d071f4e3199d3c2e453aff062834f2222
->>>>>>> 5176e13199d5cf88e9451cc69781d15197d20790
->>>>>>> 41433c623871bb187cbff748ed56c1a2a79f7b39
