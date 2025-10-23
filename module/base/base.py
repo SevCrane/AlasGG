@@ -141,7 +141,11 @@ class ModuleBase:
                 skip_first = False
             else:
                 self.device.screenshot()
-            yield self.device.image
+            try:
+                yield self.device.image
+            except AttributeError:
+                self.device.screenshot()
+                yield self.device.image
 
     def loop_hierarchy(self, skip_first=True):
         """
