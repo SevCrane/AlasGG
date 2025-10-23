@@ -2,8 +2,9 @@ from module.gg_handler.gg_data import GGData
 from module.gg_handler.gg_u2 import GGU2
 # from module.gg_handler.gg_screenshot import GGScreenshot
 from module.logger import logger
-from module.base.timer import timeout
+from module.base.timer import Timer
 import module.config.utils as utils
+from threading import Thread
 
 # 如果 utils 模块中没有 deep_get 和 deep_set，则动态定义并注入
 if not (hasattr(utils, 'deep_get') and hasattr(utils, 'deep_set')):
@@ -41,6 +42,31 @@ if not (hasattr(utils, 'deep_get') and hasattr(utils, 'deep_set')):
 # 然后再从 utils 模块导入 deep_get 和 deep_set
 from module.config.utils import deep_get, deep_set
 
+def timeout(func, timeout_sec=30.0, *args, **kwargs):
+    """
+    使用 Timer 实现一个简易 timeout。
+    如果函数在指定时间内没执行完，就返回 True（表示超时）。
+    否则返回 False（表示成功）。
+    """
+    result = {"done": False}
+
+    def target():
+        try:
+            func(*args, **kwargs)
+        finally:
+            result["done"] = True
+
+    thread = Thread(target=target)
+    thread.start()
+
+    timer = Timer(timeout_sec).start()
+    while not result["done"]:
+        if timer.reached():  # 超时
+            logger.warning(f"Timeout: {func.__name__} exceeded {timeout_sec}s")
+            return True
+        # 为了避免CPU占用太高，稍微sleep一下
+        timer.wait()  # 或者改成 time.sleep(0.1)
+    return False
 
 class GGHandler:
     """
@@ -79,7 +105,7 @@ class GGHandler:
                 logger.exception(e)
             attempt_count += 1
             logger.info(f"Restart attempt {attempt_count} failed. Retrying after a delay...")
-            time.sleep(5)
+            Timer(5).start().wait()
 
     def set(self, mode=True):
         """
