@@ -64,8 +64,6 @@ def timeout(func, timeout_sec=30.0, *args, **kwargs):
         if timer.reached():  # 超时
             logger.warning(f"Timeout: {func.__name__} exceeded {timeout_sec}s")
             return True
-        # 为了避免CPU占用太高，稍微sleep一下
-        timer.wait()  # 或者改成 time.sleep(0.1)
     return False
 
 class GGHandler:
