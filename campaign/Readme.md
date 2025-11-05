@@ -260,6 +260,7 @@ To add a new event, add a new row in here, and run `python -m module.config.conf
 | 20250912   | event 20250912 cn        | A Dance for Amahara Above                    | 起舞于天原之上             | A Dance for Amahara Above                          | アマハラに舞い奉れ                   | -                          |
 | 20250919   | event 20250912 cn        | A Dance for Amahara Above                    | -                          | -                                                  | -                                    | 起舞於天原之上             |
 | 20251009   | coalition 20250626       | The Neon City Investigator                   | -                          | -                                                  | -                                    | 迷彩都市的尋蹤者           |
+<<<<<<< HEAD
 # Event List
 
 The `/campaign` directory is used to place map files.
@@ -1014,3 +1015,7 @@ To add a new event, add a new row in here, and run `python -m module.config.conf
 >>>>>>> f6c8d91d071f4e3199d3c2e453aff062834f2222
 >>>>>>> 5176e13199d5cf88e9451cc69781d15197d20790
 >>>>>>> 41433c623871bb187cbff748ed56c1a2a79f7b39
+=======
+| 20251016   | event 20230817 cn        | The Fool's Scales                            | 复刻愚者的天平             | The Fool's Scales Rerun                            | 愚者の天秤（復刻）                   | -                          |
+| 20251023   | event 20251023 cn        | Tempesta and Islas de Libertád               | 飓风与自由群岛             | Tempesta and Islas de Libertád                     | テンペスタと自由群島                 | -                          |
+>>>>>>> upstream/master
