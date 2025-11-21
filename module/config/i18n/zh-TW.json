@@ -734,7 +734,7 @@
       "event_20220324_cn": "復刻虛像構築之塔",
       "event_20220407_tw": "蒼紅的迴響(復刻)",
       "event_20220414_cn": "復刻-永夜幻光",
-      "event_20220428_cn": "虹彩的終幕曲",
+      "event_20220428_cn": "復刻虹彩的終幕曲",
       "event_20220526_cn": "泠誓光庭",
       "event_20220728_cn": "雄鷹的敘事歌",
       "event_20220818_cn": "遠匯點作戰",
@@ -759,8 +759,8 @@
       "event_20241024_cn": "颶風與沉眠之海",
       "event_20241121_cn": "危險發明逼近中",
       "event_20241219_cn": "星光下的餘暉",
-      "event_20250227_cn": "Paradiso of Shackled Light",
-      "event_20250424_cn": "Toward Tulipa’s Seas",
+      "event_20250227_cn": "樊籠內的神光",
+      "event_20250424_cn": "揚起鬱金之旗",
       "event_20250520_cn": "高塔上的薔薇",
       "event_20250724_cn": "鍊金術士與天際交會之塔",
       "event_20250814_cn": "奇淵下的秘密",
@@ -816,6 +816,7 @@
       "war_archives_20220428_cn": "檔案 虹彩的終幕曲",
       "war_archives_20220526_cn": "檔案 泠誓光庭",
       "war_archives_20220728_cn": "檔案 雄鷹的敘事歌",
+      "war_archives_20220915_cn": "檔案 紫絳槿嵐",
       "war_archives_20231026_cn": "檔案 飓風與青春之泉"
     },
     "Mode": {
@@ -2079,29 +2080,29 @@
   },
   "PrivateQuarters": {
     "_info": {
-      "name": "宿舍計劃",
-      "help": "PrivateQuarters._info.help"
+      "name": "宿舍計劃設定",
+      "help": ""
     },
     "BuyRoses": {
-      "name": "PrivateQuarters.BuyRoses.name",
-      "help": "PrivateQuarters.BuyRoses.help"
+      "name": "購買每週浪漫滿分",
+      "help": "此功能未於台服實現\n浪漫滿分購買數量每週一刷新\n每次執行會嘗試一次性全部購買，若物資不夠（24K物資）則取消購買並延後至明日執行"
     },
     "BuyCake": {
-      "name": "PrivateQuarters.BuyCake.name",
-      "help": "PrivateQuarters.BuyCake.help"
+      "name": "購買每週蛋糕禮盒",
+      "help": "此功能未於台服實現\n蛋糕禮盒購買數量每週一刷新\n每次執行會嘗試一次性全部購買，若鑽石不夠（210鑽石）則取消購買並延後至明日執行"
     },
     "TargetInteract": {
-      "name": "PrivateQuarters.TargetInteract.name",
-      "help": "PrivateQuarters.TargetInteract.help"
+      "name": "清空每日精力",
+      "help": "與選擇的艦娘互動清空今日精力"
     },
     "TargetShip": {
-      "name": "PrivateQuarters.TargetShip.name",
-      "help": "PrivateQuarters.TargetShip.help",
-      "anchorage": "anchorage",
-      "noshiro": "noshiro",
-      "sirius": "sirius",
-      "new_jersey": "new_jersey",
-      "taihou": "taihou"
+      "name": "選擇每日互動的艦娘",
+      "help": "選擇需要與之每日互動的艦娘\n台服將跳過大鳳",
+      "anchorage": "安克拉治",
+      "noshiro": "能代",
+      "sirius": "天狼星",
+      "new_jersey": "紐澤西",
+      "taihou": "大鳳"
     }
   },
   "Daily": {

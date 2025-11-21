@@ -2,20 +2,23 @@ from .campaign_base import CampaignBase
 from module.map.map_base import CampaignMap
 from module.map.map_grids import SelectedGrids, RoadGrids
 from module.logger import logger
+from .b1 import Config as ConfigBase
 
-MAP = CampaignMap('A1')
-MAP.shape = 'I8'
-MAP.camera_data = ['D3', 'D6', 'F3', 'F6']
-MAP.camera_data_spawn_point = ['D6']
+MAP = CampaignMap('B3')
+MAP.shape = 'I9'
+MAP.camera_data = ['D3', 'D5', 'E5']
+MAP.camera_data_spawn_point = ['D7']
+MAP.map_covered = ['E3']
 MAP.map_data = """
-    -- -- -- -- -- ++ ++ -- --
-    ME ME ++ MS MB ++ ++ ME --
-    -- -- ++ -- -- MS -- -- ME
-    ME -- -- MS ++ ++ ++ -- ++
-    ++ ME -- -- Me Me -- -- ME
-    -- Me -- __ -- -- -- ME --
-    ME -- SP -- SP -- Me ++ ++
-    -- ME ++ ++ ++ ME -- -- ++
+    ++ -- -- -- ME -- -- -- ++
+    -- ME ME -- -- -- ME ME --
+    -- ME ++ Me MS Me ++ ME --
+    -- -- Me -- -- -- Me -- --
+    ME -- MS -- ++ -- MS -- ME
+    -- -- Me -- MB -- Me -- --
+    -- ME ++ -- MS -- ++ ME --
+    -- -- -- -- __ -- -- -- --
+    ++ ++ ++ SP -- SP ++ ++ ++
 """
 MAP.weight_data = """
     50 50 50 50 50 50 50 50 50
@@ -26,13 +29,15 @@ MAP.weight_data = """
     50 50 50 50 50 50 50 50 50
     50 50 50 50 50 50 50 50 50
     50 50 50 50 50 50 50 50 50
+    50 50 50 50 50 50 50 50 50
 """
 MAP.spawn_data = [
-    {'battle': 0, 'enemy': 2, 'siren': 1},
+    {'battle': 0, 'enemy': 2, 'siren': 2},
     {'battle': 1, 'enemy': 1},
-    {'battle': 2, 'enemy': 1},
-    {'battle': 3, 'enemy': 1, 'boss': 1},
-    {'battle': 4, 'enemy': 1},
+    {'battle': 2, 'enemy': 2},
+    {'battle': 3, 'enemy': 1},
+    {'battle': 4, 'enemy': 2},
+    {'battle': 5, 'enemy': 1, 'boss': 1},
 ]
 A1, B1, C1, D1, E1, F1, G1, H1, I1, \
 A2, B2, C2, D2, E2, F2, G2, H2, I2, \
@@ -42,12 +47,13 @@ A5, B5, C5, D5, E5, F5, G5, H5, I5, \
 A6, B6, C6, D6, E6, F6, G6, H6, I6, \
 A7, B7, C7, D7, E7, F7, G7, H7, I7, \
 A8, B8, C8, D8, E8, F8, G8, H8, I8, \
+A9, B9, C9, D9, E9, F9, G9, H9, I9, \
     = MAP.flatten()
 
 
-class Config:
+class Config(ConfigBase):
     # ===== Start of generated config =====
-    MAP_SIREN_TEMPLATE = []
+    MAP_SIREN_TEMPLATE = ['Mikasa', 'Nagato', 'Akagi', 'Kaga']
     MOVABLE_ENEMY_TURN = (2,)
     MAP_HAS_SIREN = True
     MAP_HAS_MOVABLE_ENEMY = True
@@ -57,30 +63,15 @@ class Config:
     MAP_HAS_MYSTERY = False
     # ===== End of generated config =====
 
-    MAP_SIREN_HAS_BOSS_ICON = True
-    INTERNAL_LINES_FIND_PEAKS_PARAMETERS = {
-        'height': (80, 255 - 17),
-        'width': (0.9, 10),
-        'prominence': 10,
-        'distance': 35,
-    }
-    EDGE_LINES_FIND_PEAKS_PARAMETERS = {
-        'height': (255 - 17, 255),
-        'prominence': 10,
-        'distance': 50,
-        'wlen': 1000
-    }
-    HOMO_EDGE_COLOR_RANGE = (0, 17)
-    MAP_ENSURE_EDGE_INSIGHT_CORNER = 'bottom'
-
-    MAP_SWIPE_MULTIPLY = (1.074, 1.095)
-    MAP_SWIPE_MULTIPLY_MINITOUCH = (1.039, 1.058)
-    MAP_SWIPE_MULTIPLY_MAATOUCH = (1.009, 1.027)
+    MAP_SWIPE_MULTIPLY = (0.985, 1.003)
+    MAP_SWIPE_MULTIPLY_MINITOUCH = (0.952, 0.970)
+    MAP_SWIPE_MULTIPLY_MAATOUCH = (0.925, 0.941)
 
 
 class Campaign(CampaignBase):
     MAP = MAP
     ENEMY_FILTER = '1L > 1M > 1E > 1C > 2L > 2M > 2E > 2C > 3L > 3M > 3E > 3C'
+    MAP_ENEMY_SEARCHING_OVERLAY_TRANSPARENCY_THRESHOLD = 0.65
 
     def battle_0(self):
         if self.clear_siren():
@@ -90,5 +81,5 @@ class Campaign(CampaignBase):
 
         return self.battle_default()
 
-    def battle_3(self):
-        return self.clear_boss()
+    def battle_5(self):
+        return self.fleet_boss.clear_boss()
