@@ -2710,6 +2710,7 @@
       "disable_all_dangerous_task": "禁用敏感项目",
       "disable_guild_and_dangerous": "禁用大舰队，以及敏感项目",
       "disable_exercise": "禁用演习",
+      "disable_meta_and_exercise":"禁用META以及演习",
       "enable_all": "百无禁忌"
     }
   },
