@@ -505,15 +505,10 @@ class NemuIpc(Platform):
                 nemu_folder=self.emulator_instance.emulator.abspath('../'),
                 instance_id=self.emulator_instance.MuMuPlayer12_id,
                 display_id=0
-<<<<<<< HEAD
-            ).__enter__()
-        except (NemuIpcIncompatible, NemuIpcError) as e:
-=======
             )
             impl.connect_with_retry()
             return impl
         except (NemuIpcIncompatible, NemuIpcError, JobTimeout) as e:
->>>>>>> upstream/master
             logger.error(e)
             logger.error('Unable to initialize NemuIpc')
             raise RequestHumanTakeover
