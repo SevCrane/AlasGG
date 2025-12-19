@@ -1184,6 +1184,7 @@
       "name": "GemsFarming._info.name",
       "help": "GemsFarming._info.help"
     },
+<<<<<<< HEAD
     "ChangeFlagship": {
       "name": "GemsFarming.ChangeFlagship.name",
       "help": "GemsFarming.ChangeFlagship.help",
@@ -1205,6 +1206,8 @@
       "name": "GemsFarming.StopIFAutoNotEnsured.name",
       "help": "GemsFarming.StopIFAutoNotEnsured.help"
     },
+=======
+>>>>>>> upstream/master
     "CommonCV": {
       "name": "GemsFarming.CommonCV.name",
       "help": "GemsFarming.CommonCV.help",
@@ -1218,8 +1221,7 @@
       "name": "GemsFarming.ChangeVanguard.name",
       "help": "GemsFarming.ChangeVanguard.help",
       "disabled": "disabled",
-      "ship": "ship",
-      "ship_equip": "ship_equip"
+      "ship": "ship"
     },
     "CommonDD": {
       "name": "GemsFarming.CommonDD.name",
