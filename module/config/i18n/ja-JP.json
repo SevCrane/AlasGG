@@ -1184,30 +1184,6 @@
       "name": "GemsFarming._info.name",
       "help": "GemsFarming._info.help"
     },
-<<<<<<< HEAD
-    "ChangeFlagship": {
-      "name": "GemsFarming.ChangeFlagship.name",
-      "help": "GemsFarming.ChangeFlagship.help",
-      "ship": "ship",
-      "ship_equip": "ship_equip"
-    },
-    "ALLowLowVanguardLevel": {
-      "name": "GemsFarming.ALLowLowVanguardLevel.name",
-      "help": "GemsFarming.ALLowLowVanguardLevel.help"
-    },
-    "FleetNumberInHardMode": {
-      "name": "GemsFarming.FleetNumberInHardMode.name",
-      "help": "GemsFarming.FleetNumberInHardMode.help",
-      "0": "0",
-      "1": "1",
-      "2": "2"
-    },
-    "StopIFAutoNotEnsured": {
-      "name": "GemsFarming.StopIFAutoNotEnsured.name",
-      "help": "GemsFarming.StopIFAutoNotEnsured.help"
-    },
-=======
->>>>>>> upstream/master
     "CommonCV": {
       "name": "GemsFarming.CommonCV.name",
       "help": "GemsFarming.CommonCV.help",

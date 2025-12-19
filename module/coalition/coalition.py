@@ -6,12 +6,6 @@ from module.coalition.combat import CoalitionCombat
 from module.exception import ScriptEnd, ScriptError
 from module.logger import logger
 from module.ocr.ocr import Digit
-<<<<<<< HEAD
-from  module.log_res.log_res import LogRes
-from module.ui.page import page_campaign_menu
-=======
->>>>>>> upstream/master
-
 
 class AcademyPtOcr(Digit):
     def __init__(self, *args, **kwargs):
