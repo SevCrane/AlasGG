@@ -1,14 +1,5 @@
-from datetime import datetime, timedelta
-
-import numpy as np
-
-from module.config.utils import (get_nearest_weekday_date,
-                                 get_os_next_reset,
-                                 get_os_reset_remain,
-                                 get_server_next_update,
-                                 DEFAULT_TIME)
-from module.exception import RequestHumanTakeover, GameStuckError, ScriptError
 from module.logger import logger
+<<<<<<< HEAD
 from module.map.map_grids import SelectedGrids
 from module.os.fleet import BossFleet
 from module.os.globe_operation import OSExploreError
@@ -891,11 +882,45 @@ class OperationSiren(OSMap):
                 logger.info("Unable to clear the hard monthly boss, try again on tomorrow")
                 self.config.task_delay(server_update=True)
                 self.config.task_stop()
+=======
+from module.os.config import OSConfig
+from module.os.tasks.abyssal import OpsiAbyssal
+from module.os.tasks.archive import OpsiArchive
+from module.os.tasks.cross_month import OpsiCrossMonth
+from module.os.tasks.daily import OpsiDaily
+from module.os.tasks.explore import OpsiExplore
+from module.os.tasks.hazard_leveling import OpsiHazard1Leveling
+from module.os.tasks.meowfficer_farming import OpsiMeowfficerFarming
+from module.os.tasks.month_boss import OpsiMonthBoss
+from module.os.tasks.obscure import OpsiObscure
+from module.os.tasks.shop import OpsiShop
+from module.os.tasks.stronghold import OpsiStronghold
+from module.os.tasks.voucher import OpsiVoucher
+
+
+class OperationSiren(
+    OpsiDaily,
+    OpsiShop,
+    OpsiVoucher,
+    OpsiMeowfficerFarming,
+    OpsiHazard1Leveling,
+    OpsiObscure,
+    OpsiAbyssal,
+    OpsiArchive,
+    OpsiStronghold,
+    OpsiMonthBoss,
+    OpsiExplore,
+    OpsiCrossMonth,
+):
+    """
+    Operation Siren main class that combines all task modules.
+    """
+    pass
+>>>>>>> upstream/master
 
 
 if __name__ == '__main__':
-    self = OperationSiren('month_test', task='OpsiMonthBoss')
-    from module.os.config import OSConfig
+    self = OperationSiren('alas', task='OpsiMonthBoss')
 
     self.config = self.config.merge(OSConfig())
 
