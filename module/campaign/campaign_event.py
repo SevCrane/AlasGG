@@ -42,24 +42,7 @@ class CampaignEvent(CampaignStatus):
                 self.config.cross_set(keys=keys, value=False)
 
             # Reset GemsFarming
-<<<<<<< HEAD
-            for task in tasks:
-                if task not in GEMS_FARMINGS:
-                    continue
-                name = self.config.cross_get(keys=f'{task}.Campaign.Name', default='2-4')
-                if not self.stage_is_main(name):
-                    from module.config.utils import deep_get
-                    _gg_on = deep_get(self.config.data, keys='GameManager.GGHandler.Enabled')
-                    if _gg_on:
-                        campaign_to_go = '15-1'
-                    else:
-                        campaign_to_go = '2-4'
-                    logger.info(f'Reset GemsFarming to {campaign_to_go}')
-                    self.config.cross_set(keys=f'{task}.Campaign.Name', value=campaign_to_go)
-                    self.config.cross_set(keys=f'{task}.Campaign.Event', value='campaign_main')
-=======
             self._reset_gems_farming(tasks)
->>>>>>> upstream/master
 
             logger.info(f'Reset event time limit')
             self.config.cross_set(keys='EventGeneral.EventGeneral.TimeLimit', value=DEFAULT_TIME)
