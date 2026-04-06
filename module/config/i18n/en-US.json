@@ -474,6 +474,7 @@
       "LDPlayer3": "LD Player 3",
       "LDPlayer4": "LD Player 4",
       "LDPlayer9": "LD Player 9",
+      "LDPlayer14": "LDPlayer 14",
       "MuMuPlayer": "MuMu Player",
       "MuMuPlayerX": "MuMu Player X",
       "MuMuPlayer12": "MuMu Player 12",
@@ -771,6 +772,7 @@
       "event_20251023_cn": "Tempesta and Islas de Libertád",
       "event_20251218_cn": "A Note Through the Firmament",
       "event_20260226_cn": "Springtide Inn Online",
+      "event_20260326_cn": "The Vagabond’s Recruitment Plan",
       "raid_20200624": "Air Raid Drills with Essex Rerun",
       "raid_20210708": "Cross Wave rerun",
       "raid_20220127": "Mystery Investigation",
@@ -1435,6 +1437,10 @@
     "Favorite": {
       "name": "Use Favorite Filter",
       "help": "During student selection apply the favorite filter\nThereby, giving priority to certain ship girls\nApply the favorite status to a ship girl in-game"
+    },
+    "MinLevel": {
+      "name": "Add Students with Level >= X Only",
+      "help": ""
     }
   },
   "Research": {

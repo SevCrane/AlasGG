@@ -373,7 +373,7 @@ class RewardTacticalClass(Dock):
         if self.appear(RAPID_TRAINING, offset=offset, interval=1):
             self.device.click(RAPID_TRAINING)
             # Clear interval to enter _tactical_books_choose fast
-            self.interval_clear(TACTICAL_CLASS_CANCEL, interval=2)
+            self.interval_clear(TACTICAL_CLASS_START, interval=2)
             return True
 
         return False
@@ -444,7 +444,7 @@ class RewardTacticalClass(Dock):
             # Get finish time
             # sometimes you have TACTICAL_CHECK without black-blurred background
             # TACTICAL_CLASS_CANCEL and TACTICAL_CHECK appears
-            if not self.appear(TACTICAL_CLASS_CANCEL, offset=(20, 20)) \
+            if not self.appear(TACTICAL_CLASS_START, offset=(20, 20)) \
                     and self.appear(TACTICAL_CHECK, offset=(20, 20), interval=2):
                 self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION])
                 if book_empty:
@@ -495,11 +495,10 @@ class RewardTacticalClass(Dock):
             if self.appear(MISSION_POPUP_GO, offset=self._popup_offset, interval=2):
                 self.device.click(MISSION_POPUP_ACK)
                 continue
-            if self.appear(TACTICAL_CLASS_CANCEL, offset=(30, 30), interval=2) \
-                    and self.appear(TACTICAL_CLASS_START, offset=(30, 30)):
+            if self.appear(TACTICAL_CLASS_START, offset=(30, 30), interval=2):
                 if self._tactical_books_choose():
                     self.dock_select_index = 0
-                    self.interval_reset([TACTICAL_CLASS_CANCEL, BOOK_EMPTY_POPUP])
+                    self.interval_reset([TACTICAL_CLASS_START, BOOK_EMPTY_POPUP])
                     self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION])
                 else:
                     study_finished = True
@@ -527,6 +526,8 @@ class RewardTacticalClass(Dock):
                     logger.info('Not going to learn skill but in dock, close it')
                     study_finished = True
                     self.device.click(BACK_ARROW)
+                # reset DOCK_CHECK to Timer(3)
+                self.interval_timer.pop(DOCK_CHECK.name, None)
                 self.interval_reset([BOOK_EMPTY_POPUP, DOCK_CHECK], interval=3)
                 continue
             if self.appear(SKILL_CONFIRM, offset=(20, 20), interval=3):
@@ -644,27 +645,34 @@ class RewardTacticalClass(Dock):
         # Wait until they turn into
         # [120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120]
         level_ocr = LevelOcr(CARD_LEVEL_GRIDS.buttons, name='DOCK_LEVEL_OCR', threshold=64)
-        timeout = Timer(1, count=1).start()
-        while 1:
+        list_level = []
+        for _ in self.loop(timeout=1):
             list_level = level_ocr.ocr(self.device.image)
             first_ship = next((i for i, x in enumerate(list_level) if x > 0), len(list_level))
             first_empty = next((i for i, x in enumerate(list_level) if x == 0), len(list_level))
-            if timeout.reached():
-                logger.warning('Wait ship cards timeout')
-                break
             if first_empty >= first_ship:
                 break
-            self.device.screenshot()
+        else:
+            logger.warning('Wait ship cards timeout')
+
+        try:
+            min_level = int(self.config.AddNewStudent_MinLevel)
+            if min_level < 1:
+                min_level = 1
+        except (ValueError, TypeError) as e:
+            logger.warning(f'Invalid AddNewStudent_MinLevel: {self.config.AddNewStudent_MinLevel}, {e}')
+            min_level = 1
+        logger.attr('AddNewStudent_MinLevel', min_level)
 
         should_select_button = None
         for button, level in list(zip(CARD_GRIDS.buttons, list_level))[self.dock_select_index:]:
             # Select ship LV > 1 only
-            if level > 1:
+            if level >= min_level:
                 should_select_button = button
                 break
 
         if should_select_button is None:
-            logger.info('No ships with level > 1 in dock')
+            logger.info(f'No ships with level >= {min_level} in dock')
             return False
 
         # select a ship
