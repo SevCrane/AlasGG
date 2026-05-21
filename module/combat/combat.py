@@ -127,6 +127,8 @@ class Combat(Level, HPBalancer, Retirement, SubmarineCall, CombatAuto, CombatMan
             return PAUSE_SpringInn
         if PAUSE_ElvenVine.match_template_color(self.device.image, offset=(10, 10)):
             return PAUSE_ElvenVine
+        if PAUSE_GildedReverie.match_template_color(self.device.image, offset=(10, 10)):
+            return PAUSE_GildedReverie
         return False
 
     def handle_combat_quit(self, offset=(20, 20), interval=3):
@@ -180,6 +182,10 @@ class Combat(Level, HPBalancer, Retirement, SubmarineCall, CombatAuto, CombatMan
             return True
         if QUIT_SpringInn.match_luma(self.device.image, offset=offset):
             self.device.click(QUIT_SpringInn)
+            timer.reset()
+            return True
+        if QUIT_GildedReverie.match_luma(self.device.image, offset=offset):
+            self.device.click(QUIT_GildedReverie)
             timer.reset()
             return True
         return False

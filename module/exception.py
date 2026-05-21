@@ -6,6 +6,10 @@ class OilExhausted(Exception):
     pass
 
 
+class OilMaxed(Exception):
+    pass
+
+
 class MapDetectionError(Exception):
     pass
 
