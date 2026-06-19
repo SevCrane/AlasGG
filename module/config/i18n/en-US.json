@@ -399,6 +399,7 @@
       "cn_channel-2": "[国服] 十字军行动",
       "cn_channel-3": "[国服] 龙骑兵行动",
       "cn_channel-4": "[国服] 冥王星行动",
+      "cn_channel-5": "[国服] 群岛计划",
       "en-0": "[EN] Avrora",
       "en-1": "[EN] Lexington",
       "en-2": "[EN] Sandy",
@@ -755,7 +756,7 @@
       "event_20231221_cn": "Light-Chasing Sea of Stars Rerun",
       "event_20240229_cn": "Snowrealm Peregrination Rerun",
       "event_20240425_cn": "Heart-Linking Harmony",
-      "event_20240521_cn": "Light of the Martyrium",
+      "event_20240521_cn": "Light of the Martyrium Rerun",
       "event_20240725_cn": "Interlude of Illusions",
       "event_20240815_cn": "Windborne Steel Wings",
       "event_20240829_cn": "Whence Flowers Bear No Fruit",
@@ -830,8 +831,10 @@
       "war_archives_20220915_cn": "archives Violet Tempest Blooming Lycoris",
       "war_archives_20221222_cn": "archives Parallel Superimposition",
       "war_archives_20230223_cn": "archives Revelations of Dust",
+      "war_archives_20230525_cn": "archives Confluence of Nothingness",
       "war_archives_20230803_cn": "archives Anthem of Remembrance",
-      "war_archives_20231026_cn": "archives Tempesta and the Fountain of Youth"
+      "war_archives_20231026_cn": "archives Tempesta and the Fountain of Youth",
+      "war_archives_20240725_cn": "archives Interlude of Illusions"
     },
     "Mode": {
       "name": "Level Mode",
@@ -1210,7 +1213,7 @@
     },
     "ChangeVanguard": {
       "name": "Change Vanguard",
-      "help": "Change vanguard if flagship or vanguard are emotion exhausted. If you choose not to change, your fleet will ignore the low emotion warning and continue combat.\nSwitch out to new level 100(70) common vanguard from eagle or ironblood after current flagship has reached level 32+ (Only CN players'0 limit break ship can reach level 100)\n\nThe vanguard's equipment is replaced when being switched out by first recording the current setup. Only populated equipment slots will be replaced.",
+      "help": "Change vanguard if flagship or vanguard are emotion exhausted. If you choose not to change, your fleet will ignore the low emotion warning and continue combat.\nSwitch out to new level 100(70) common vanguard from eagle or ironblood after current flagship has reached level 32+ (Only CN players'0 limit break ship can reach level 100)",
       "disabled": "Don't Change",
       "ship": "Change Ship"
     },

@@ -227,7 +227,9 @@ class CampaignRun(CampaignEvent, ShopStatus):
             'event_20250814_cn',
             'event_20251023_cn',
             'event_20260326_cn',
+            'war_archives_20230525_cn',
             'war_archives_20231026_cn',
+            'war_archives_20240725_cn',
         ]:
             name = convert.get(name, name)
         # Convert between A/B/C/D and T/HT
@@ -263,7 +265,9 @@ class CampaignRun(CampaignEvent, ShopStatus):
             'event_20250814_cn',
             'event_20251023_cn',
             'event_20260326_cn',
+            'war_archives_20230525_cn',
             'war_archives_20231026_cn',
+            'war_archives_20240725_cn',
         ]:
             name = convert.get(name, name)
         else:
