@@ -67,5 +67,5 @@ class RequestHumanTakeover(Exception):
     pass
 
 
-class AutoSearchSetError(Exception):
+class HardNotSatisfied(RequestHumanTakeover):
     pass
