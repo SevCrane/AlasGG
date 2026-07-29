@@ -67,5 +67,9 @@ class RequestHumanTakeover(Exception):
     pass
 
 
+<<<<<<< HEAD
 class AutoSearchSetError(Exception):
+=======
+class HardNotSatisfied(RequestHumanTakeover):
+>>>>>>> upstream/master
     pass
