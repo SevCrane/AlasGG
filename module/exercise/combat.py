@@ -194,29 +194,3 @@ class ExerciseCombat(HpDaemon, OpponentChoose, Combat):
 
         self._preparation_quit()
         return False
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-    def equipment_take_off_when_finished(self):
-        if self.config.EXERCISE_FLEET_EQUIPMENT is None:
-            return False
-        if not self.equipment_has_take_on:
-            return False
-
-        self._choose_opponent(0)
-        super().equipment_take_off()
-        self._preparation_quit()
-
-    # def equipment_take_on(self):
-    #     if self.config.EXERCISE_FLEET_EQUIPMENT is None:
-    #         return False
-    #     if self.equipment_has_take_on:
-    #         return False
-    #
-    #     self._choose_opponent(0)
-    #     super().equipment_take_on()
-    #     self._preparation_quit()
-=======
->>>>>>> upstream/master
->>>>>>> dev

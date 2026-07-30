@@ -262,10 +262,6 @@ class Equipment(EquipmentCodeHandler):
 
     #     logger.info('Equipment take on ended')
 
-<<<<<<< HEAD
-        self.ui_back(out)
-        self.equipment_has_take_on = True
-=======
     # def fleet_equipment_take_on_preset(self, preset_record, enter, long_click, out):
     #     """
     #     Args:
@@ -287,4 +283,3 @@ class Equipment(EquipmentCodeHandler):
 
     #     self.ui_back(out)
     #     self.equipment_has_take_on = True
->>>>>>> upstream/master
