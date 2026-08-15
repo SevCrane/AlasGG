@@ -221,11 +221,6 @@ RaidDaily:
     Fleet2Control: prevent_yellow_face
     Fleet2Recover: not_in_dormitory
     Fleet2Oath: false
-MaritimeEscort:
-  Scheduler:
-    SuccessInterval: 30
-    FailureInterval: 30
-    ServerUpdate: 00:00
 Coalition:
   Scheduler:
     SuccessInterval: 30
@@ -280,6 +275,11 @@ CoalitionSp:
     Fleet2Control: prevent_yellow_face
     Fleet2Recover: not_in_dormitory
     Fleet2Oath: false
+EventShop:
+  Scheduler:
+    SuccessInterval: 30
+    FailureInterval: 30
+    ServerUpdate: 00:00
 
 # ==================== Reward ====================
 
@@ -457,6 +457,12 @@ OpsiHazard1Leveling:
     ServerUpdate: 00:00, 12:00
   OpsiFleet:
     Submarine: false
+
+# =================== Island ===================
+
+IslandCollect:
+  Scheduler:
+    ServerUpdate: 03:00, 18:00
 
 # ==================== Tool ====================
 

@@ -15,13 +15,17 @@ class ManualConfig:
     > Exercise
     > Dorm > Meowfficer > Guild > Gacha
     > Reward
-    > ShopFrequent > ShopOnce > Shipyard > Freebies
+    > ShopFrequent > EventShop > ShopOnce > Shipyard > Freebies
     > PrivateQuarters
     > OpsiExplore
     > Minigame > Awaken
     > OpsiAshBeacon
     > OpsiDaily > OpsiShop > OpsiVoucher
     > OpsiAbyssal > OpsiStronghold > OpsiObscure > OpsiArchive
+    > IslandFreebie > IslandCollect
+    > IslandBusiness > IslandSeasonTask
+    > IslandOrder
+    > IslandProduction
     > Daily > Hard > OpsiAshBeacon > OpsiAshAssist > OpsiMonthBoss
     > Sos > EventSp > EventA > EventB > EventC > EventD
     > RaidDaily > CoalitionSp > WarArchives > MaritimeEscort
@@ -374,6 +378,11 @@ class ManualConfig:
     """
     # For dev purpose, auto extract new item templates
     SHOP_EXTRACT_TEMPLATE = False
+
+    """
+    module.shop_event
+    """
+    EVENT_SHOP_IGNORE_DEADLINE = False
 
     """
     module.war_archives

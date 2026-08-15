@@ -181,12 +181,15 @@ class GeneratedConfig:
     # Group `Hospital`
     Hospital_UseRecommendFleet = True
 
-    # Group `MaritimeEscort`
-    MaritimeEscort_Enable = True
-
     # Group `Coalition`
     Coalition_Mode = 'hard'  # easy, normal, hard, sp
     Coalition_Fleet = 'single'  # single, multi
+
+    # Group `EventShop`
+    EventShop_UnlockSSRShip = True
+    EventShop_BuyURShip = 2  # 0, 1, 2
+    EventShop_PresetFilter = 'all'  # all, custom
+    EventShop_CustomFilter = 'EquipUR > EquipSSR > Cube > GachaTicket\n> Array > Chip > CatT3 \n> Meta > SkinBox\n> Oil > Coin > Medal > ExpBookT1 > FoodT1\n> DR > PR\n> AugmentCore > AugmentEnhanceT2 > AugmentChangeT2 > AugmentChangeT1\n> CatT2 > CatT1 > PlateGeneralT3 > PlateT3 > BoxT4\n> ShipSSR'
 
     # Group `Commission`
     Commission_PresetFilter = 'cube'  # cube, cube_24h, chip, chip_24h, oil, custom
@@ -413,7 +416,7 @@ class GeneratedConfig:
 
     # Group `OpsiShop`
     OpsiShop_PresetFilter = 'max_benefit_meta'  # max_benefit, max_benefit_meta, no_meta, all, custom
-    OpsiShop_CustomFilter = 'LoggerAbyssalT6 > LoggerAbyssalT5 > LoggerObscure > LoggerAbyssalT4 > ActionPoint > PurpleCoins\n> GearDesignPlanT3 > PlateRandomT4 > DevelopmentMaterialT3 > GearDesignPlanT2 > GearPart\n> OrdnanceTestingReportT3 > OrdnanceTestingReportT2 > DevelopmentMaterialT2 > OrdnanceTestingReportT1\n> METARedBook > CrystallizedHeatResistantSteel > NanoceramicAlloy > NeuroplasticProstheticArm > SupercavitationGenerator'
+    OpsiShop_CustomFilter = 'LoggerAbyssalT6 > LoggerAbyssalT5 > LoggerAbyssalT4 > LoggerObscureT6 > LoggerObscureT5 > LoggerObscureT4 > LoggerObscureT3 > ActionPoint > PurpleCoins\n> GearDesignPlanT3 > PlateRandomT4 > DevelopmentMaterialT3 > GearDesignPlanT2 > GearPart\n> OrdnanceTestingReportT3 > OrdnanceTestingReportT2 > DevelopmentMaterialT2 > OrdnanceTestingReportT1\n> METARedBook > CrystallizedHeatResistantSteel > NanoceramicAlloy > NeuroplasticProstheticArm > SupercavitationGenerator'
 
     # Group `OpsiVoucher`
     OpsiVoucher_Filter = 'LoggerAbyssal > LoggerObscure > Book > Coin > Fragment'
@@ -444,6 +447,43 @@ class GeneratedConfig:
     # Group `OpsiHazard1Leveling`
     OpsiHazard1Leveling_TargetZone = 0  # 0, 44, 22
 
+    # Group `IslandProduction`
+    IslandProduction_HardFloorItems = '{}'
+    IslandProduction_ReserveItems = '{}'
+    IslandProduction_DailyBufferItems = '{}'
+    IslandProduction_IdleAccumulatingItems = '{}'
+
+    # Group `IslandOrder`
+    IslandOrder_StuckSeasonOrderId = 0
+
+    # Group `IslandFreebie`
+    IslandFreebie_Share = True
+
+    # Group `IslandRestaurant`
+    IslandRestaurant_KoiGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_KoiWaitress1 = 'any'  # none, any, Chao_Ho, Chang_Feng
+    IslandRestaurant_KoiWaitress2 = 'none'  # none, any, Chao_Ho, Chang_Feng
+    IslandRestaurant_KoiMenu = '{}'
+    IslandRestaurant_BearGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_BearWaitress1 = 'any'  # none, any, Cheshire, Chang_Feng
+    IslandRestaurant_BearWaitress2 = 'none'  # none, any, Cheshire, Chang_Feng
+    IslandRestaurant_BearMenu = '{}'
+    IslandRestaurant_EateryGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_EateryWaitress1 = 'any'  # none, any, Helena, Prinz_Eugen, Chang_Feng
+    IslandRestaurant_EateryWaitress2 = 'none'  # none, any, Helena, Prinz_Eugen, Chang_Feng
+    IslandRestaurant_EateryMenu = '{}'
+    IslandRestaurant_GrillGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_GrillWaitress1 = 'any'  # none, any, August_von_Parseval, Prinz_Eugen, Chang_Feng
+    IslandRestaurant_GrillWaitress2 = 'none'  # none, any, August_von_Parseval, Prinz_Eugen, Chang_Feng
+    IslandRestaurant_GrillMenu = '{}'
+    IslandRestaurant_CafeGrade = 'bronze'  # bronze, silver, gold, diamond
+    IslandRestaurant_CafeWaitress1 = 'any'  # none, any, Cheshire, Belfast, Chang_Feng
+    IslandRestaurant_CafeWaitress2 = 'none'  # none, any, Cheshire, Belfast, Chang_Feng
+    IslandRestaurant_CafeMenu = '{}'
+
+    # Group `IslandSeasonTask`
+    IslandSeasonTask_TaskTarget = '{}'
+
     # Group `Daemon`
     Daemon_EnterMap = True
 
@@ -453,6 +493,14 @@ class GeneratedConfig:
 
     # Group `EventStory`
     EventStory_SkipBattle = False  # True, False
+
+    # Group `IslandProductionPlanner`
+    IslandProductionPlanner_RescanIslandTechnology = False
+    IslandProductionPlanner_DailyProfitLowerLimit = 50000
+    IslandProductionPlanner_DailyBufferSafetyMargin = 0
+    IslandProductionPlanner_FieldsEfficiency = 0  # 0, 0.04, 0.12
+    IslandProductionPlanner_OrchardEfficiency = 0  # 0, 0.04, 0.12
+    IslandProductionPlanner_NurseryEfficiency = 0  # 0, 0.04, 0.12
 
     # Group `Benchmark`
     Benchmark_DeviceType = 'emulator'  # emulator, plone_cloud_with_adb, phone_cloud_without_adb, android_phone, android_phone_vmos
