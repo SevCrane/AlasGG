@@ -15,6 +15,8 @@ from module.island.data import DIC_ISLAND_ITEM, DIC_ISLAND_RESTAURANT_MENU_TO_RE
 from module.island.utils import (
     get_stuck_season_order_requirements,
     load_hard_floor_items,
+    load_item_mapping,
+    merge_task_target_stuck_order_items,
     normalize_item_keys,
 )
 from module.island_handler.assets import *
@@ -25,6 +27,7 @@ from module.island_handler.restaurant_config import (
     WAITRESS_ANY,
     WAITRESS_NONE,
     get_config_key,
+    get_restaurant_capacity,
     get_restaurant_config,
     get_selected_named_waitresses,
     get_waitress_effect,
@@ -112,27 +115,12 @@ class RestaurantItemGrid(ItemGrid):
 class IslandRestaurant(IslandDock):
     working_restaurant_id = None
 
-    @staticmethod
-    def get_initial_capacity_from_grade(grade):
-        if grade == 'bronze':
-            return 5
-        elif grade in ['silver', 'gold', 'diamond']:
-            return 6
-        else:
-            raise ValueError(f"Invalid grade: {grade}")
-
     @cached_property
     def restaurant_capacity(self):
-        capacity = {}
-        for restaurant_id in RESTAURANT_IDS:
-            config_data = get_restaurant_config(restaurant_id)
-            grade = self.config.cross_get(
-                get_config_key(restaurant_id, config_data['grade_key'])
-            )
-            slots = get_waitress_slots(self.config, restaurant_id)
-            capacity_delta, _ = get_waitress_effect(restaurant_id, slots)
-            capacity[restaurant_id] = self.get_initial_capacity_from_grade(grade) + capacity_delta
-        return capacity
+        return {
+            restaurant_id: get_restaurant_capacity(self.config, restaurant_id)
+            for restaurant_id in RESTAURANT_IDS
+        }
 
     @staticmethod
     def get_quantity_from_grade(grade):
@@ -277,8 +265,9 @@ class IslandRestaurant(IslandDock):
             item for item in items
             if item.id in menu
             # Sell one full waitress-capacity tranche while preserving manual
-            # hard floors and remaining season-order requirements. Reserves and
-            # daily buffers are soft and may be consumed by restaurants.
+            # hard floors, task targets, and remaining season-order
+            # requirements. Reserves and daily buffers are soft and may be
+            # consumed by restaurants.
             and has_sellable_capacity(item)
         ]
         surplus_items = [
@@ -303,13 +292,18 @@ class IslandRestaurant(IslandDock):
         stuck_season_order_id = self.config.cross_get(
             "IslandOrder.IslandOrder.StuckSeasonOrderId", 0
         )
-        season_order_items = normalize_item_keys(
-            get_stuck_season_order_requirements(stuck_season_order_id)
+        task_target_items = load_item_mapping(
+            self.config.cross_get("IslandSeasonTask.IslandSeasonTask.TaskTarget", "{}"),
+            config_name='TaskTarget',
         )
-        item_ids = set(hard_floor_items) | set(season_order_items)
+        protected_target_items = merge_task_target_stuck_order_items(
+            task_target_items,
+            get_stuck_season_order_requirements(stuck_season_order_id),
+        )
+        item_ids = set(hard_floor_items) | set(protected_target_items)
         return {
             item_id: max(hard_floor_items.get(item_id, 0), 0)
-            + max(season_order_items.get(item_id, 0), 0)
+            + max(protected_target_items.get(item_id, {}).get('total_need_count', 0), 0)
             for item_id in item_ids
         }
 
@@ -397,19 +391,21 @@ class IslandRestaurant(IslandDock):
                 | selected_waitresses
                 | all_named_waitresses
             )
-            selected = self.island_dock_select_character_with_blacklist(fallback_blacklist)
-            if selected is None:
+            candidate = self.island_dock_find_character_with_blacklist(fallback_blacklist)
+            if candidate is None:
                 success = False
             else:
-                selected_waitresses.add(selected)
+                self.island_dock_select_one(candidate.button)
+                selected_waitresses.add(candidate.identity)
 
         for _ in range(active_waitresses.count(WAITRESS_ANY)):
             blacklist = unavailable_waitress_list | selected_waitresses | all_named_waitresses
-            selected = self.island_dock_select_character_with_blacklist(blacklist)
-            if selected is None:
+            candidate = self.island_dock_find_character_with_blacklist(blacklist)
+            if candidate is None:
                 success = False
             else:
-                selected_waitresses.add(selected)
+                self.island_dock_select_one(candidate.button)
+                selected_waitresses.add(candidate.identity)
         if not success:
             logger.warning("Failed to choose waitress")
             self.ui_back(check_button=self.is_in_island_restaurant)
