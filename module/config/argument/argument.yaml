@@ -775,11 +775,11 @@ IslandProduction:
     type: textarea
     value: |-
       {}
-  ReserveItems:
+  DailyBufferItems:
     type: textarea
     value: |-
       {}
-  DailyBufferItems:
+  ManualBufferItems:
     type: textarea
     value: |-
       {}
