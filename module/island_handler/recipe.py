@@ -51,6 +51,8 @@ RECIPE_PRODUCT_NAME_AREA = (123, 23, 269, 46)
 RECIPE_PRODUCT_STOCK_AREA = (212, 92, 275, 110)
 if server.server == 'jp':
     lang = 'jp'
+elif server.server == 'tw':
+    lang = 'tw'
 else:
     lang = 'cnocr'
 RECIPE_PRODUCT_NAME_OCR = Ocr([], lang=lang, letter=(57, 59, 61), threshold=160, name='product_name_ocr')
@@ -82,7 +84,7 @@ class IslandReversedDigitCounter(Ocr):
         if self.sub_letter is not None and isinstance(self.sub_letter, tuple):
             mask = color_similarity_2d(image, self.sub_letter)
             mask[mask < self.sub_threshold] = 0
-            if np.count_nonzero(mask) > 30:
+            if cv2.countNonZero(mask) > 30:
                 sub_image = extract_letters(image, letter=self.sub_letter, threshold=self.sub_threshold)
                 cv2.bitwise_and(main_image, sub_image, dst=main_image)
 
