@@ -2038,7 +2038,8 @@
       "HardFloorItems": "{}",
       "DailyBufferItems": "{}",
       "ManualBufferItems": "{}",
-      "IdleAccumulatingItems": "{}"
+      "IdleAccumulatingItems": "{}",
+      "SkipBufferSurplus": true
     },
     "Storage": {
       "Storage": {}
